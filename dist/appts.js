@@ -1,0 +1,1 @@
+mainApp.controller("HomeController",["$scope",function(o){alert("ppp")}]);var mainApp=angular.module("",[]);
