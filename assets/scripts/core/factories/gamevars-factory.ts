@@ -12,14 +12,15 @@ module Application.Factories {
 			// Init the game variables
 			this.gamevars = this.initGamevars();
 		}
-		
+
+
 		/**
 		** Init the variables of the game
 		**/
 		private initGamevars(): any {
 			this.lifePoints = 100;
-			this.moodPoints=100;
-			this.tiredPoints= 0;
+			this.moodPoints = 100;
+			this.tiredPoints = 0;
 			this.money = 50;
 		}
 

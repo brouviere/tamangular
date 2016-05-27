@@ -7,18 +7,21 @@ module Application.Controllers {
 		moodPoints: number;
 		tiredPoints: number;
 		money: number;
+		gameVars: any;
 
 		constructor($scope: ng.IScope, gamevarsfactory: any) {
-			
 			this.scope = $scope;
-			
-			let gameVars = new gamevarsfactory;
-			this.lifePoints = gameVars.getLifePoints();
-			this.moodPoints = gameVars.getMoodPoints();
-			this.tiredPoints = gameVars.getTiredPoints();
-			this.money = gameVars.getMoney();
+			this.gameVars = new gamevarsfactory;
 		}
 
-		
+		/** 
+		* INIT the game variables
+		**/
+		initGameVars() {
+			this.lifePoints = this.gameVars.getLifePoints();
+			this.moodPoints = this.gameVars.getMoodPoints();
+			this.tiredPoints = this.gameVars.getTiredPoints();
+			this.money = this.gameVars.getMoney();
+		}
 	}
 }
