@@ -6,3 +6,7 @@ Pour cloner le répertoire:
 - se rendre dans /var/www/html/
 - taper la commande suivante : git clone https://github.com/brouviere/tamangular.git
 
+Installation
+-
+* Cloner le repertoire comme indiquer ci-dessus  
+* Lancer votre serveur web sur tamangular/index.html
