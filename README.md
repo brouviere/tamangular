@@ -9,5 +9,5 @@ Pour cloner le répertoire:
 Installation
 -
 * Cloner le repertoire comme indiquer ci-dessus  
-* lancer npm install angular 
+* lancer `npm install angular` 
 * Lancer votre serveur web sur tamangular/index.html
