@@ -11,17 +11,25 @@ module Application.Controllers {
 		cycle: any;
 		interval: any;
 		hasWorked : any; // If tama has worked on one cycle
-		workfactory: any;
 		gameStarted: boolean;
 		score: number;
 
-		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any) {
+		// Factories
+		workfactory: any;
+		foodfactory: any;
+
+		// Actions
+		listfood: any;
+		
+		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any, foodfactory: any) {
 			this.scope = $scope;
 			this.gameVars = new gamevarsfactory;
 			this.workfactory = new workfactory;
+			this.foodfactory = new foodfactory;
 			this.scope.gameStarted = false;
 
-			
+			this.listfood = this.foodfactory.getFoodList();
+			console.log(this.listfood);
 			this.interval = $interval;
 
 		}
@@ -41,6 +49,9 @@ module Application.Controllers {
 
 			this.money = this.gameVars.getMoney();
 			this.becomeOlder();
+
+			
+
 		}
 
 		// Start the lifetime cycle
@@ -89,6 +100,10 @@ module Application.Controllers {
 					this.scope.state = "good";
 				});
 			}, 3000);
+		}
+
+		goHeating(){
+			this.foodfactory.heating();
 		}
 
 
