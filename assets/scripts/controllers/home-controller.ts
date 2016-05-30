@@ -29,14 +29,8 @@ module Application.Controllers {
 			this.workfactory = new workfactory;
 			this.foodfactory = new foodfactory;
 			this.scope.gameStarted = false;
-<<<<<<< HEAD
-
 			this.listfood = this.foodfactory.getFoodList();
-			console.log(this.listfood);
-=======
 			this.lastScore = localStorage.getItem('lastScore');
-			
->>>>>>> 3f3c9440dffe43b6968bceee787fada400dca7d8
 			this.interval = $interval;
 
 		}
