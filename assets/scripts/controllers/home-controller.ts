@@ -13,12 +13,14 @@ module Application.Controllers {
 		hasWorked : any; // If tama has worked on one cycle
 		workfactory: any;
 		gameStarted: boolean;
+		score: number;
 
 		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any) {
 			this.scope = $scope;
 			this.gameVars = new gamevarsfactory;
 			this.workfactory = new workfactory;
 			this.scope.gameStarted = false;
+
 			
 			this.interval = $interval;
 
@@ -35,6 +37,7 @@ module Application.Controllers {
 			this.scope.gameStarted = true;
 			this.scope.working = false;
 			this.scope.state = "good";
+			this.scope.score = 0;
 
 			this.money = this.gameVars.getMoney();
 			this.becomeOlder();
@@ -47,6 +50,7 @@ module Application.Controllers {
 			this.cycle = setInterval(() => {
 				this.scope.$apply(() => {
 					this.setOlderVariables();
+					this.scope.score++;
 				});
 			},3000);
 
