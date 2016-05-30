@@ -11,11 +11,14 @@ module Application.Controllers {
 		cycle: any;
 		interval: any;
 		hasWorked : any; // If tama has worked on one cycle
+		workfactory: any;
+		gameStarted: boolean;
 
-
-		constructor($scope: ng.IScope, gamevarsfactory: any,$interval:any) {
+		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any) {
 			this.scope = $scope;
 			this.gameVars = new gamevarsfactory;
+			this.workfactory = new workfactory;
+			this.scope.gameStarted = false;
 			
 			this.interval = $interval;
 
@@ -29,6 +32,9 @@ module Application.Controllers {
 			this.moodPoints = this.gameVars.getMoodPoints();
 			this.tiredPoints = this.gameVars.getTiredPoints();
 			this.hasWorked = false;
+			this.scope.gameStarted = true;
+			this.scope.working = false;
+			this.scope.state = "good";
 
 			this.money = this.gameVars.getMoney();
 			this.becomeOlder();
@@ -42,21 +48,46 @@ module Application.Controllers {
 				this.scope.$apply(() => {
 					this.setOlderVariables();
 				});
-			},1000);
+			},3000);
 
 		}
 
 		// Called on a cycle, defines the loss of points
 		setOlderVariables(){
 			this.lifePoints--;
-			if (this.lifePoints===0){
+			if (this.lifePoints <= 0){
 				clearInterval(this.cycle);
+				this.scope.gameStarted = false;
 				return false;
 			}
 			if (!this.hasWorked) {
-				this.lifePoints -= 2;
+				this.lifePoints -= 3;
 			} 
+			this.hasWorked = false;
 			console.log(this.lifePoints);
 		}
+
+		setActionVariables(workingVariables) {
+			this.lifePoints += workingVariables['life'];
+			this.moodPoints += workingVariables['mood'];
+			this.tiredPoints += workingVariables['tired'];
+			this.money += workingVariables['money'];
+		}
+		
+		goToWork() {
+			this.scope.working = true;
+			this.scope.state = "bad";
+			this.setActionVariables(this.workfactory.working(this.tiredPoints));
+			this.hasWorked = true;
+			setTimeout(() => {
+				this.scope.$apply(() => {
+					this.scope.working = false;
+					this.scope.state = "good";
+				});
+			}, 3000);
+		}
+
+
+
 	}
 }

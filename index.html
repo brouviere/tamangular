@@ -26,17 +26,19 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="panel panel-default">
 					 	<div class="panel-heading">
-					 		<button class="btn btn-success" ng-click="myController.initGameVars()">Start</button>
-					 		<button class="btn" ng-click="myController.becomeOlder()">older</button>
 					    	<h3 class="panel-title">Your Tamagotchi's name</h3>
+					 		<button class="btn btn-success" ng-click="myController.initGameVars()" ng-disabled="gameStarted">Start</button>
+					 		<button class="btn" ng-click="myController.goToWork()" 
+					 		ng-disabled="(!gameStarted) || (working==true)">
+					 			<i class="fa fa-spin fa-spinner" ng-if="working"></i>
+					 			<span ng-if="working"> Working</span>
+					 			<span ng-if="!working">Go to Work</span>
+					 		</button>
 						</div>
 						<div class="panel-body">
 						<!-- GAUGES -->
 					    	<div>
-					    	<!-- HEALTH -->
-					    	<p ng-bind="myController.lifePoints"></p>
-					    	<p ng-bind="myController.timer"></p>
-					    	
+					    	<!-- HEALTH -->					    	
 					    		<div class="col-xs-12 col-sm-12">
 									<div class="progress">
 										<div class="progress-bar progress-bar-success" style="width: {{myController.lifePoints}}%"><i class="fa fa-plus"></i></div>
@@ -55,14 +57,14 @@
 								<div class="col-xs-6">
 									<div class="col-xs-12">
 								    	<div class="progress">
-											<div class="progress-bar progress-bar-info" style="width: {{myController.tiredPoints}}%"><i class="fa fa-battery-half"></i></div>
+											<div class="progress-bar progress-bar-danger" style="width: {{myController.tiredPoints}}%"><i class="fa fa-battery-half"></i></div>
 										</div>
 									</div>
 								</div>
 					    	<div class="row">
 						    <!-- AVATAR -->
 								<div class="col-xs-offset-4 col-xs-3">
-									<img class="img-responsive" src="assets/images/pk_good.png" alt="">
+									<img class="img-responsive" ng-src="assets/images/pk_{{ state }}.png" alt="">
 								</div>
 
 							<!-- MONEY -->
