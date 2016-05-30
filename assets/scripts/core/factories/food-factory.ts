@@ -14,31 +14,31 @@ module Application.Factories {
 			let foodList = {
 				'carrotes' : {
 					name: 'carrotes',
-					price: 5,
+					price: -5,
 					life : 1,
 					mood : -1
 				},
 				'epinards': {
 					name: 'epinards',
-					price: 5,
+					price: -5,
 					life: 2,
 					mood: -3
 				},
 				'burger': {
 					name: 'burger',
-					price: 1,
+					price: -1,
 					life: -2,
 					mood: 3
 				},
 				'coca': {
 					name: 'coca',
-					price: 1,
+					price: -1,
 					life: -2,
 					mood: 3
 				},
 				'gateauchocolat': {
-					name: 'gateauchocolat',
-					price: 2,
+					name: 'gateau au chocolat',
+					price: -2,
 					life: 0,
 					mood: 2
 				}
@@ -48,7 +48,7 @@ module Application.Factories {
 		}
 
 
-		heating(food){
+		eating(food){
 			
 			let workingVariables = new Array;
 			let fl = this.getFoodList();

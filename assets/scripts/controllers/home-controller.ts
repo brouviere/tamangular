@@ -18,6 +18,7 @@ module Application.Controllers {
 		workfactory: any;
 		foodfactory: any;
 
+
 		// Actions
 		listfood: any;
 		
@@ -43,7 +44,7 @@ module Application.Controllers {
 			this.tiredPoints = this.gameVars.getTiredPoints();
 			this.hasWorked = false;
 			this.scope.gameStarted = true;
-			this.scope.working = false;
+			this.scope.onAction = false;
 			this.scope.state = "good";
 			this.scope.score = 0;
 
@@ -90,22 +91,32 @@ module Application.Controllers {
 		}
 		
 		goToWork() {
-			this.scope.working = true;
+			this.scope.onAction = true;
 			this.scope.state = "bad";
 			this.setActionVariables(this.workfactory.working(this.tiredPoints));
 			this.hasWorked = true;
+			this.waitingAction(3000);
+		}
+
+		goEating(food){
+			console.log(food);
+			this.scope.onAction = true;
+			this.scope.state = "bad";
+			this.waitingAction(1000);
+			this.setActionVariables(this.foodfactory.eating(food));
+		}
+
+		waitingAction(time){
 			setTimeout(() => {
 				this.scope.$apply(() => {
-					this.scope.working = false;
+					
+					this.scope.onAction = false;
 					this.scope.state = "good";
-				});
-			}, 3000);
+						
+					
+				}); 
+			}, time);
 		}
-
-		goHeating(){
-			this.foodfactory.heating();
-		}
-
 
 
 	}
