@@ -1,4 +1,4 @@
-# tamangular
+# TamAngular
 Tamagotchi project developped with AngularJS&amp;Typescript
 
 Pour cloner le répertoire:
