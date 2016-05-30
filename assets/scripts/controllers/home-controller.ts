@@ -14,13 +14,14 @@ module Application.Controllers {
 		workfactory: any;
 		gameStarted: boolean;
 		score: number;
+		lastScore: number;
 
 		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any) {
 			this.scope = $scope;
 			this.gameVars = new gamevarsfactory;
 			this.workfactory = new workfactory;
 			this.scope.gameStarted = false;
-
+			this.lastScore = localStorage.getItem('lastScore');
 			
 			this.interval = $interval;
 
@@ -38,6 +39,7 @@ module Application.Controllers {
 			this.scope.working = false;
 			this.scope.state = "good";
 			this.scope.score = 0;
+			this.scope.lastScore = this.lastScore;
 
 			this.money = this.gameVars.getMoney();
 			this.becomeOlder();
@@ -51,6 +53,7 @@ module Application.Controllers {
 				this.scope.$apply(() => {
 					this.setOlderVariables();
 					this.scope.score++;
+					localStorage.setItem('lastScore', JSON.stringify(this.scope.score));
 				});
 			},3000);
 
