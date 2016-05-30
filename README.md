@@ -14,8 +14,8 @@ Pour cloner le répertoire:
 
 #Game PLay
 #### But du jeu
-	Atteindre le plus haut score en mainenant votre tamangular le plus longtemps en vie avec un bon niveau de vie et de santé. 
-	Chaque cycle vous fait gagner 1pt au score.
+Atteindre le plus haut score en mainenant votre tamangular le plus longtemps en vie avec un bon niveau de vie et de santé. 
+Chaque cycle vous fait gagner 1pt au score.
 
 #### Les jauges du jeu
 * en vert :  La jauge de Vie sur 100%
