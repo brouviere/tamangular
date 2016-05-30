@@ -10,24 +10,29 @@ module Application.Controllers {
 		gameVars: any;
 		cycle: any;
 		interval: any;
-		hasWorked : any; // If tama has worked on one cycle
+		// States
+		hasWorked : boolean; // If tama has worked on one cycle
+		hasSlept : boolean; // If tama has slept on one cycle
 		gameStarted: boolean;
+		// Score
 		score: number;
 		lastScore: number;
 
 		// Factories
 		workfactory: any;
 		foodfactory: any;
+		sleepfactory: any;
 
 
 		// Actions
 		listfood: any;
 		
-		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any, foodfactory: any) {
+		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any, foodfactory: any, sleepfactory:any) {
 			this.scope = $scope;
 			this.gameVars = new gamevarsfactory;
 			this.workfactory = new workfactory;
 			this.foodfactory = new foodfactory;
+			this.sleepfactory = new sleepfactory;
 			this.scope.gameStarted = false;
 			this.listfood = this.foodfactory.getFoodList();
 			this.lastScore = localStorage.getItem('lastScore');
@@ -43,6 +48,7 @@ module Application.Controllers {
 			this.moodPoints = this.gameVars.getMoodPoints();
 			this.tiredPoints = this.gameVars.getTiredPoints();
 			this.hasWorked = false;
+			this.hasSlept = false;
 			this.scope.gameStarted = true;
 			this.scope.onAction = false;
 			this.scope.state = "good";
@@ -66,22 +72,43 @@ module Application.Controllers {
 					this.scope.score++;
 					localStorage.setItem('lastScore', JSON.stringify(this.scope.score));
 				});
-			},3000);
+			},5000);
 
 		}
 
+		isDead(){
+			clearInterval(this.cycle);
+			this.scope.gameStarted = false;
+			this.scope.state = "dead";
+
+		}
 		// Called on a cycle, defines the loss of points
 		setOlderVariables(){
 			this.lifePoints--;
 			if (this.lifePoints <= 0){
-				clearInterval(this.cycle);
-				this.scope.gameStarted = false;
+				this.isDead();
 				return false;
 			}
+
 			if (!this.hasWorked) {
 				this.lifePoints -= 3;
-			} 
+			}
+			if (!this.hasSlept) {
+				if (this.hasWorked) {
+					this.tiredPoints += 5;
+					this.moodPoints -=5 ;
+				}
+
+				this.tiredPoints += 10;
+			}
+			if(this.tiredPoints >=100) {
+				this.lifePoints -= 15;
+				this.moodPoints -= 15;
+
+			}
+
 			this.hasWorked = false;
+			this.hasSlept = false;
 			console.log(this.lifePoints);
 		}
 
@@ -90,6 +117,7 @@ module Application.Controllers {
 			this.moodPoints += workingVariables['mood'];
 			this.tiredPoints += workingVariables['tired'];
 			this.money += workingVariables['money'];
+			this.scope.workingVariables = workingVariables;
 		}
 		
 		goToWork() {
@@ -97,6 +125,13 @@ module Application.Controllers {
 			this.scope.state = "bad";
 			this.setActionVariables(this.workfactory.working(this.tiredPoints));
 			this.hasWorked = true;
+			this.waitingAction(2000);
+		}
+		goToSleep() {
+			this.scope.onAction = true;
+			this.scope.state = "dead";
+			this.setActionVariables(this.sleepfactory.sleeping(this.tiredPoints));
+			this.hasSlept = true;
 			this.waitingAction(3000);
 		}
 

@@ -15,6 +15,7 @@ Pour cloner le répertoire:
 #Game PLay
 #### But du jeu
 	Atteindre le plus haut score en mainenant votre tamangular le plus longtemps en vie avec un bon niveau de vie et de santé. 
+	Chaque cycle vous fait gagner 1pt au score.
 
 #### Les jauges du jeu
 * en vert :  La jauge de Vie sur 100%
@@ -28,3 +29,4 @@ Durant chaque, vous devez réaliser certaines actions pour ne pas avoir de péna
 
 * Work (Travailler) : Action obligatoire par cycle sous peine d'une pénalité de la jauge de vie
 * Feed (Manger) : Nourrissez votre tamagular. Attention, certains aliments sont bon pour la santé, d'autres bon pour le moral.
+* Sleep (Dormir) : Faites dormir votre tamangular sous peine d'une fatigue accrue, d'un moral en berne et d'une santé fortement mise à mal.

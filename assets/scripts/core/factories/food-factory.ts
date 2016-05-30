@@ -36,8 +36,8 @@ module Application.Factories {
 					life: -2,
 					mood: 3
 				},
-				'gateauchocolat': {
-					name: 'gateau au chocolat',
+				'gateau': {
+					name: 'gateau',
 					price: -2,
 					life: 0,
 					mood: 2

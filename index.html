@@ -27,12 +27,15 @@
 					<div class="panel panel-default">
 					 	<div class="panel-heading">
 					    	<h3 class="panel-title">Your Tamagotchi's name</h3>
+					    <!-- Action Start -->
 					 		<button class="btn btn-success" ng-click="myController.initGameVars()" ng-disabled="gameStarted">Start</button>
-					 		
+					 	
+						<!-- Action work -->	
 					 		<button class="btn" ng-click="myController.goToWork()" 
 					 		ng-disabled="(!gameStarted) || onAction">
-					 			<span> Working</span>
+					 			<span> Work</span>
 					 		</button>
+						<!-- Action Feed -->
 					 		<div class="btn-group">
 								<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-disabled="!gameStarted || onAction">
 									Feed
@@ -40,12 +43,18 @@
 								</button>
 								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 									<li ng-repeat="(key, food) in myController.listfood">
-										<a href="#" ng-click="myController.goEating(key)"><span ng-bind="food.name"></span></a></li>
-									
+										<a href="#" ng-click="myController.goEating(key)">
+											<span ng-bind="food.name"> </span>
+											<span class="pull-right  fa fa-money " ng-bind="food.price"></span>
+										</a>
+									</li>
 								</ul>
-
 							</div>
-					 		
+						<!-- Action Sleep -->
+					 		<button class="btn" ng-click="myController.goToSleep()" 
+					 		ng-disabled="(!gameStarted) || onAction">
+					 			<span> Sleep</span>
+					 		</button>
 
 						</div>
 						<div class="panel-body">
@@ -76,11 +85,34 @@
 								</div>
 					    	<div class="row">
 						    <!-- loader -->
-						    	<div class="col-xs-1">
-						   			 <i class="fa fa-spinner fa-pulse fa-5x" ng-if="onAction"></i>
+						    	<div class="col-xs-4">
+						    	<div class="panel panel-default" ng-show="gameStarted">
+									<div class="panel-heading">
+										<h3 class="panel-title">Action cost</h3>
+									</div>
+									<div class="panel-body">
+						   			 	<div class="col-xs-6">
+						   			 		<i class="fa fa-spinner fa-pulse fa-4x" ng-if="onAction"></i>	
+						   			 	</div>
+						   			 	<div class="col-xs-6">
+							   			 	<div class="col-xs-12">
+							   			 		<label class="fa fa-plus"> &nbsp;</label><span ng-bind="workingVariables.life"></span>
+							   			 	</div>
+							   			 	<div class="col-xs-12">
+							   			 		<label class="fa fa-user"> &nbsp;</label><span ng-bind="workingVariables.mood"></span>
+							   			 	</div>
+							   			 	<div class="col-xs-12">
+							   			 		<label class="fa fa-battery-half"> &nbsp;</label><span ng-bind="workingVariables.tired"></span>
+							   			 	</div>
+							   			 	<div class="col-xs-12">
+							   			 		<label class="fa fa-money"> &nbsp;</label><span ng-bind="workingVariables.money"></span>
+							   			 	</div>
+						   			 	</div>
+									</div>	
+								</div>
 						   		</div>
 						    <!-- AVATAR -->
-								<div class="col-xs-offset-3 col-xs-3">
+								<div class=" col-xs-3">
 									<img class="img-responsive" ng-src="assets/images/pk_{{ state }}.png" alt="">
 								</div>
 
