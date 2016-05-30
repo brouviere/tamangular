@@ -13,6 +13,7 @@ module Application.Controllers {
 		hasWorked : any; // If tama has worked on one cycle
 		gameStarted: boolean;
 		score: number;
+		lastScore: number;
 
 		// Factories
 		workfactory: any;
@@ -28,9 +29,14 @@ module Application.Controllers {
 			this.workfactory = new workfactory;
 			this.foodfactory = new foodfactory;
 			this.scope.gameStarted = false;
+<<<<<<< HEAD
 
 			this.listfood = this.foodfactory.getFoodList();
 			console.log(this.listfood);
+=======
+			this.lastScore = localStorage.getItem('lastScore');
+			
+>>>>>>> 3f3c9440dffe43b6968bceee787fada400dca7d8
 			this.interval = $interval;
 
 		}
@@ -47,6 +53,7 @@ module Application.Controllers {
 			this.scope.onAction = false;
 			this.scope.state = "good";
 			this.scope.score = 0;
+			this.scope.lastScore = this.lastScore;
 
 			this.money = this.gameVars.getMoney();
 			this.becomeOlder();
@@ -63,6 +70,7 @@ module Application.Controllers {
 				this.scope.$apply(() => {
 					this.setOlderVariables();
 					this.scope.score++;
+					localStorage.setItem('lastScore', JSON.stringify(this.scope.score));
 				});
 			},3000);
 
