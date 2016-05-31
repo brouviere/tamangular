@@ -30,3 +30,27 @@ Durant chaque, vous devez réaliser certaines actions pour ne pas avoir de péna
 * Work (Travailler) : Action obligatoire par cycle sous peine d'une pénalité de la jauge de vie
 * Feed (Manger) : Nourrissez votre tamagular. Attention, certains aliments sont bon pour la santé, d'autres bon pour le moral.
 * Sleep (Dormir) : Faites dormir votre tamangular sous peine d'une fatigue accrue, d'un moral en berne et d'une santé fortement mise à mal.
+
+
+#Tests unitaires
+Mise en place des tests unitaires avec karma et Jasmine.
+#### Installation
+`npm install karma-jasmine --save-dev`
+`npm install jasmine-core --save-dev`
+`sudo npm install karma --save-dev`
+`sudo npm install -g karma-cli`
+`npm install karma-chrome-launcher --save-dev`
+
+Une fois les packages installés, il faut initailiser le fichier karma.conf.js
+`karma init karma.conf.js`
+Répondre par défaut aux questions.
+Attention: Pour les fichiers à loader, mettre:
+`	'tests/lib/angular.js',
+	'tests/lib/angular-mock.js',
+	'dist/appts.js',
+	'tests/calculator-controller.js'`
+
+#### Lancement des tests
+`karma start karma.conf.js`
+
+
