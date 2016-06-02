@@ -1,15 +1,23 @@
-<div ng-hide="closework">
+<div  class="modal fade"  id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1>choose work !</h1>
+			</div>	
 
-<p ng-bind="closework">jajajaja</p>
-	<h1>choose work !</h1>
-	<div>
-		<h2 ng-bind="work.name"></h2>
-		<p>Salary : <span ng-bind="work.salary"></span></p>
-		<p>Life : <span ng-bind="work.life"></span></p>
-		<p>Tired : <span ng-bind="work.tired"></span></p>
-		<div class="btn-group">
-			<button class="btn btn-success"  ng-click="$parent.myController.acceptWork(work)">Accept</button>
-			<button class="btn btn-danger" ng-click="declineWork()">Decline</button>
+			<div class="modal-body">
+				<h2 ng-bind="work.name"></h2>
+				<p>Salary : <span ng-bind="work.salary"></span></p>
+				<p>Life : <span ng-bind="work.life"></span></p>
+				<p>Tired : <span ng-bind="work.tired"></span></p>
+			</div>
+			<div class="modal-footer">
+				<div class="btn-group">
+					<button class="btn btn-success"  ng-click="$parent.myController.acceptWork(workKey,work)" data-dismiss="modal">Accept</button>
+					<button class="btn btn-danger" ng-click="declineWork()" data-dismiss="modal">Decline</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+

@@ -38,6 +38,7 @@
 					<div class="panel panel-default">
 					 	<div class="panel-heading">
 					    	<h3 class="panel-title">Your Tamagotchi's name</h3>
+					    	<h4 ng-bind="workName"></h4>
 					    <!-- Action Start -->
 					 		<button class="btn btn-success" ng-click="myController.initGameVars()" ng-disabled="gameStarted">Start</button>
 					 	
@@ -46,6 +47,9 @@
 					 		ng-disabled="(!gameStarted) || onAction">
 					 			<span> Work</span>
 					 		</button>
+					 		<button type="button" class="btn" data-toggle="modal" data-target="#myModal">
+							 Choose Work
+							</button>
 						<!-- Action Feed -->
 					 		<div class="btn-group">
 								<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-disabled="!gameStarted || onAction">

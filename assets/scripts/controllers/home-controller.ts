@@ -11,6 +11,9 @@ module Application.Controllers {
 		cycle: any;
 		interval: any;
 		ready: any;
+		workIndex: string;
+		workActionVariables: any;
+
 		// States
 		hasWorked : boolean; // If tama has worked on one cycle
 		hasSlept : boolean; // If tama has slept on one cycle
@@ -29,8 +32,11 @@ module Application.Controllers {
 		
 		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any, foodfactory: any, sleepfactory: any) {
 			this.scope = $scope;
+			this.scope.workName = '';
+			this.workIndex = '';
+
 			this.gameVars = new gamevarsfactory;
-			this.workfactory = new workfactory;
+			this.workfactory = new  workfactory;
 			this.foodfactory = new foodfactory;
 			this.sleepfactory = new sleepfactory;
 			this.scope.gameStarted = false;
@@ -85,6 +91,7 @@ module Application.Controllers {
 					this.setOlderVariables();
 					this.scope.score++;
 					localStorage.setItem('lastScore', JSON.stringify(this.scope.score));
+
 				});
 			},5000);
 
@@ -127,6 +134,7 @@ module Application.Controllers {
 		}
 
 		setActionVariables(workingVariables) {
+			console.log('---->', workingVariables['life'])
 			this.lifePoints += workingVariables['life'];
 			this.moodPoints += workingVariables['mood'];
 			this.tiredPoints += workingVariables['tired'];
@@ -137,7 +145,7 @@ module Application.Controllers {
 		goToWork() {
 			this.scope.onAction = true;
 			this.scope.state = "bad";
-			this.setActionVariables(this.workfactory.working(this.tiredPoints));
+			this.setActionVariables(this.workfactory.working(this.workActionVariables));
 			this.hasWorked = true;
 			this.waitingAction(2000);
 		}
@@ -169,8 +177,25 @@ module Application.Controllers {
 			}, time);
 		}
 
-		acceptWork(work) {
-			console.log('yo', work);
+		acceptWork(workKey, work) {
+			console.log('yo', work, workKey, work.life);
+			let actionVariables = [];
+			actionVariables['life'] = -1;
+			actionVariables['mood']= 5;
+			actionVariables['tired']= 5;
+			actionVariables['money']= 0;
+			this.setActionVariables(actionVariables);
+			this.scope.workName = work.name;
+			this.workIndex = workKey;
+
+			this.workActionVariables = [];
+			this.workActionVariables['life'] = work.life;
+			this.workActionVariables['mood'] = Math.floor(Math.random() * work.mood);
+			this.workActionVariables['tired'] = work.tired;
+			this.workActionVariables['money'] = work.salary;
+
+			this.waitingAction(2000);
+
 			
 		}
 
