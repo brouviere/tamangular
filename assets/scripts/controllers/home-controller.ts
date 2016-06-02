@@ -10,6 +10,7 @@ module Application.Controllers {
 		gameVars: any;
 		cycle: any;
 		interval: any;
+		ready: any;
 		// States
 		hasWorked : boolean; // If tama has worked on one cycle
 		hasSlept : boolean; // If tama has slept on one cycle
@@ -23,11 +24,10 @@ module Application.Controllers {
 		foodfactory: any;
 		sleepfactory: any;
 
-
-		// Actions
+		
 		listfood: any;
 		
-		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any, foodfactory: any, sleepfactory:any) {
+		constructor($scope: ng.IScope, gamevarsfactory: any, $interval: any, workfactory: any, foodfactory: any, sleepfactory: any) {
 			this.scope = $scope;
 			this.gameVars = new gamevarsfactory;
 			this.workfactory = new workfactory;
@@ -37,7 +37,21 @@ module Application.Controllers {
 			this.listfood = this.foodfactory.getFoodList();
 			this.lastScore = localStorage.getItem('lastScore');
 			this.interval = $interval;
+			
+		}
 
+		readyToPlay(trigger) {
+			if(trigger === "ok") { 
+				// console.log(trigger);
+				this.ready = true;
+				// console.log(this.ready);
+				return this.ready
+			} else {
+				// console.log(trigger);
+				this.ready = false;
+				// console.log(this.ready);
+				return this.ready;
+			}
 		}
 
 		/** 
@@ -155,6 +169,10 @@ module Application.Controllers {
 			}, time);
 		}
 
+		acceptWork(work) {
+			console.log('yo', work);
+			
+		}
 
 	}
 }

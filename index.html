@@ -13,17 +13,28 @@
 	</head>
 	<body ng-app="tamangularApp">
 		<div ng-controller="HomeController as myController">
+		<div choosework-directive>
+				
+			</div>
 			<div class="container">
 			<!-- TITLE -->
 				<div>
-					<h1>TamAngular</h1>
+					<h1 class="hidden-xs" ng-if="myController.ready">TamAngular</h1>
 				</div>
 			<!-- HEADER -->
 				<header>
 					
 				</header>
 			<!-- CONTENT -->
-				<div class="col-xs-12 col-sm-12">
+				<div class="col-xs-12" ng-if="!myController.ready" ng-hide="gameStarted">
+					<div class="jumbotron">
+						<h1>TamAngular</h1>
+						<img src="assets/images/pk_good.png" alt="pika_good_mood" class="img-thumbnail">
+						<p>Le but du jeu est d'atteindre le plus haut score en mainenant votre TamAngular le plus longtemps en vie avec un bon niveau de joie et de santé. Chaque cycle vous fait gagner 1pt au score.</p>
+						<p><a class="btn btn-primary btn-lg" ng-click="myController.readyToPlay('ok')">Jouer à TamAngular</a></p>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12" ng-show="myController.ready">
 					<div class="panel panel-default">
 					 	<div class="panel-heading">
 					    	<h3 class="panel-title">Your Tamagotchi's name</h3>
@@ -85,39 +96,39 @@
 								</div>
 					    	<div class="row">
 						    <!-- loader -->
-						    	<div class="col-xs-4">
-						    	<div class="panel panel-default" ng-show="gameStarted">
-									<div class="panel-heading">
-										<h3 class="panel-title">Action cost</h3>
+						    	<div class="col-xs-12 col-sm-4">
+							    	<div class="panel panel-default" ng-show="gameStarted">
+										<div class="panel-heading">
+											<h3 class="panel-title">Action cost</h3>
+										</div>
+										<div class="panel-body">
+							   			 	<div class="col-xs-6">
+							   			 		<i class="fa fa-spinner fa-pulse fa-4x" ng-if="onAction"></i>	
+							   			 	</div>
+							   			 	<div class="col-xs-6">
+								   			 	<div class="col-xs-12">
+								   			 		<label class="fa fa-plus"> &nbsp;</label><span ng-bind="workingVariables.life"></span>
+								   			 	</div>
+								   			 	<div class="col-xs-12">
+								   			 		<label class="fa fa-user"> &nbsp;</label><span ng-bind="workingVariables.mood"></span>
+								   			 	</div>
+								   			 	<div class="col-xs-12">
+								   			 		<label class="fa fa-battery-half"> &nbsp;</label><span ng-bind="workingVariables.tired"></span>
+								   			 	</div>
+								   			 	<div class="col-xs-12">
+								   			 		<label class="fa fa-money"> &nbsp;</label><span ng-bind="workingVariables.money"></span>
+								   			 	</div>
+							   			 	</div>
+										</div>	
 									</div>
-									<div class="panel-body">
-						   			 	<div class="col-xs-6">
-						   			 		<i class="fa fa-spinner fa-pulse fa-4x" ng-if="onAction"></i>	
-						   			 	</div>
-						   			 	<div class="col-xs-6">
-							   			 	<div class="col-xs-12">
-							   			 		<label class="fa fa-plus"> &nbsp;</label><span ng-bind="workingVariables.life"></span>
-							   			 	</div>
-							   			 	<div class="col-xs-12">
-							   			 		<label class="fa fa-user"> &nbsp;</label><span ng-bind="workingVariables.mood"></span>
-							   			 	</div>
-							   			 	<div class="col-xs-12">
-							   			 		<label class="fa fa-battery-half"> &nbsp;</label><span ng-bind="workingVariables.tired"></span>
-							   			 	</div>
-							   			 	<div class="col-xs-12">
-							   			 		<label class="fa fa-money"> &nbsp;</label><span ng-bind="workingVariables.money"></span>
-							   			 	</div>
-						   			 	</div>
-									</div>	
-								</div>
 						   		</div>
 						    <!-- AVATAR -->
-								<div class=" col-xs-3">
+								<div class=" col-xs-10 col-sm-6">
 									<img class="img-responsive" ng-src="assets/images/pk_{{ state }}.png" alt="">
 								</div>
 
 							<!-- MONEY -->
-								<div class="col-xs-1">
+								<div class="col-xs-1 col-sm-1" ng-show="gameStarted">
 									<i class="fa fa-money"></i>
 									<span ng-bind=myController.money></span>
 								</div>
@@ -132,6 +143,7 @@
 						</div>
 				</div>
 			<!-- FOOTER -->
+			
 
 				
 			</div>

@@ -1,0 +1,72 @@
+{
+	"chomeur": {
+		"name": "Chomeur",
+		"salary": 0,
+		"life": 0,
+		"mood": -5,
+		"tired": 0
+	},
+	"pizza": {
+		"name": "Livreur de pizza",
+		"salary": 2,
+		"life": -2,
+		"mood": -1,
+		"tired": 3
+	},
+	"formateur": {
+		"name": "Formateur Angular",
+		"salary": 3,
+		"life": -5,
+		"mood": 1,
+		"tired": 5
+	},
+	"developpeur": {
+		"name": "Dev Front-End",
+		"salary": 5,
+		"life": -1,
+		"mood": 3,
+		"tired": 3
+	},
+	"rh": {
+		"name": "Responsable RH & communication",
+		"salary": 8,
+		"life": -5,
+		"mood": -7,
+		"tired": 0
+	},
+	"rentier": {
+		"name": "Rentier",
+		"salary": 15,
+		"life": -10,
+		"mood": 7,
+		"tired": 0
+	},
+	"banquier": {
+		"name": "Banquier",
+		"salary": 15,
+		"life": -15,
+		"mood": -9,
+		"tired": 5
+	},
+	"astronaute": {
+		"name": "Astronaute",
+		"salary": 150,
+		"life": -20,
+		"mood": 20,
+		"tired": 20
+	},
+	"footballer": {
+		"name": "Foot ballon Joueur",
+		"salary": 150,
+		"life": -10,
+		"mood": 5,
+		"tired": 10
+	},
+	"eboueur": {
+		"name": "Eboueur",
+		"salary": 2,
+		"life": -15,
+		"mood": -15,
+		"tired": 15
+	}
+}

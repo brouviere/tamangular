@@ -9,6 +9,7 @@ module Application.Factories {
 			
 		}
 
+		// Variables
 		working(tiredPoints){
 			let workingVariables = new Array;
 			workingVariables['money'] = 1;
@@ -24,6 +25,9 @@ module Application.Factories {
 			return workingVariables;
 		}
 
+		getWorkList () {
+			
+		}
 
 	}
 }

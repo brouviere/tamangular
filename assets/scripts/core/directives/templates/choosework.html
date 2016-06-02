@@ -1,0 +1,15 @@
+<div ng-hide="closework">
+
+<p ng-bind="closework">jajajaja</p>
+	<h1>choose work !</h1>
+	<div>
+		<h2 ng-bind="work.name"></h2>
+		<p>Salary : <span ng-bind="work.salary"></span></p>
+		<p>Life : <span ng-bind="work.life"></span></p>
+		<p>Tired : <span ng-bind="work.tired"></span></p>
+		<div class="btn-group">
+			<button class="btn btn-success"  ng-click="$parent.myController.acceptWork(work)">Accept</button>
+			<button class="btn btn-danger" ng-click="declineWork()">Decline</button>
+		</div>
+	</div>
+</div>

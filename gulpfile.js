@@ -18,7 +18,7 @@ var cssTarget = './dist/';
 gulp.task('compileTS', function() {
   return gulp.src(tsSource)
   	.pipe(ts({ out:'appts.js'}))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest(jsTarget))
     .pipe(livereload());
 });
@@ -42,11 +42,10 @@ gulp.task('compileCSS', function() {
 
 gulp.task('watch', function(){
 	livereload.listen();
-
 	gulp.watch(styleSource,['compileCSS']);
 	gulp.watch(jsSource,['compileJS']);
 	gulp.watch(tsSource,['compileTS']);
 	gulp.watch('./index.html',function(){
-		livereload.reload('./index.html')
-	})
+		livereload.reload('./index.html');
+	});
 });
