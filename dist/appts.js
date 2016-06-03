@@ -6,6 +6,8 @@ var Application;
         var HomeController = (function () {
             function HomeController($scope, gamevarsfactory, $interval, workfactory, foodfactory, sleepfactory) {
                 this.scope = $scope;
+                this.scope.workName = '';
+                this.workIndex = '';
                 this.gameVars = new gamevarsfactory;
                 this.workfactory = new workfactory;
                 this.foodfactory = new foodfactory;
@@ -90,6 +92,7 @@ var Application;
                 console.log(this.lifePoints);
             };
             HomeController.prototype.setActionVariables = function (workingVariables) {
+                console.log('---->', workingVariables['life']);
                 this.lifePoints += workingVariables['life'];
                 this.moodPoints += workingVariables['mood'];
                 this.tiredPoints += workingVariables['tired'];
@@ -99,7 +102,7 @@ var Application;
             HomeController.prototype.goToWork = function () {
                 this.scope.onAction = true;
                 this.scope.state = "bad";
-                this.setActionVariables(this.workfactory.working(this.tiredPoints));
+                this.setActionVariables(this.workfactory.working(this.workActionVariables));
                 this.hasWorked = true;
                 this.waitingAction(2000);
             };
@@ -126,8 +129,22 @@ var Application;
                     });
                 }, time);
             };
-            HomeController.prototype.acceptWork = function (work) {
-                console.log('yo', work);
+            HomeController.prototype.acceptWork = function (workKey, work) {
+                console.log('yo', work, workKey, work.life);
+                var actionVariables = [];
+                actionVariables['life'] = -1;
+                actionVariables['mood'] = 5;
+                actionVariables['tired'] = 5;
+                actionVariables['money'] = 0;
+                this.setActionVariables(actionVariables);
+                this.scope.workName = work.name;
+                this.workIndex = workKey;
+                this.workActionVariables = [];
+                this.workActionVariables['life'] = work.life;
+                this.workActionVariables['mood'] = Math.floor(Math.random() * work.mood);
+                this.workActionVariables['tired'] = work.tired;
+                this.workActionVariables['money'] = work.salary;
+                this.waitingAction(2000);
             };
             return HomeController;
         }());
@@ -179,18 +196,19 @@ var Application;
     var Factories;
     (function (Factories) {
         var workfactory = (function () {
-            function workfactory() {
+            function workfactory(worklistService) {
+                this.wkService = worklistService;
             }
             // Variables
-            workfactory.prototype.working = function (tiredPoints) {
+            workfactory.prototype.working = function (v) {
                 var workingVariables = new Array;
-                workingVariables['money'] = 1;
-                workingVariables['tired'] = 1;
-                workingVariables['mood'] = -1;
-                workingVariables['life'] = -1;
-                if (tiredPoints >= 30 && tiredPoints < 50)
+                workingVariables['money'] = v.money;
+                workingVariables['tired'] = v.tired;
+                workingVariables['mood'] = v.mood;
+                workingVariables['life'] = v.life;
+                if (v.tired >= 30 && v.tired < 50)
                     workingVariables['life'] = -2;
-                else if (tiredPoints > 50)
+                else if (v.tired > 50)
                     workingVariables['life'] = -3;
                 console.log(workingVariables);
                 return workingVariables;
@@ -288,18 +306,21 @@ var Application;
     (function (Directives) {
         var chooseworkDirective = (function () {
             function chooseworkDirective(worklistService) {
-                this.close = true;
+                this.close = false;
                 this.wkService = worklistService;
                 return this.instanceDirective();
             }
             chooseworkDirective.prototype.instanceDirective = function () {
                 var thesunhine = [];
+                var workKey = '';
                 this.wkService.getWorkList().then(function (data) {
                     var wk = Math.floor((Math.random() * 10));
                     var i = 0;
                     angular.forEach(data, function (value, key) {
-                        if (wk == i)
+                        if (wk == i) {
                             thesunhine = value;
+                            workKey = key;
+                        }
                         i++;
                     });
                 });
@@ -311,6 +332,7 @@ var Application;
                     },
                     link: function (scope) {
                         scope.work = thesunhine;
+                        scope.workKey = workKey;
                         scope.closework = this.close;
                     }
                 };

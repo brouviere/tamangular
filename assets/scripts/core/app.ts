@@ -19,7 +19,7 @@ appModule.controller("HomeController",
 appModule.factory("gamevarsfactory", () => Application.Factories.gamevarsfactory);
 
 // Go to work factory
-appModule.factory("workfactory", () => Application.Factories.workfactory);
+appModule.factory("workfactory", () =>  Application.Factories.workfactory);
 
 // Go to work factory
 appModule.factory("foodfactory", () => Application.Factories.foodfactory);

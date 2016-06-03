@@ -3,21 +3,21 @@
 
 module Application.Factories {
 	export class workfactory {
-		
+		wkService: any;
 
-		constructor(){
-			
+		constructor(worklistService: any) {
+			this.wkService = worklistService;
 		}
 
 		// Variables
-		working(tiredPoints){
+		working(v){
 			let workingVariables = new Array;
-			workingVariables['money'] = 1;
-			workingVariables['tired'] = 1;
-			workingVariables['mood'] = -1;
-			workingVariables['life'] = -1;
-			if (tiredPoints >= 30 && tiredPoints < 50) workingVariables['life'] = -2;
-			else if (tiredPoints > 50) workingVariables['life'] = -3;
+			workingVariables['money'] = v.money;
+			workingVariables['tired'] = v.tired;
+			workingVariables['mood'] = v.mood;
+			workingVariables['life'] = v.life;
+			if (v.tired >= 30 && v.tired < 50) workingVariables['life'] = -2;
+			else if (v.tired > 50) workingVariables['life'] = -3;
 
 
 			console.log(workingVariables);
