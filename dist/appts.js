@@ -17,11 +17,12 @@ var Application;
                 this.lastScore = localStorage.getItem('lastScore');
                 this.interval = $interval;
             }
-            HomeController.prototype.readyToPlay = function (trigger) {
+            HomeController.prototype.readyToPlay = function (trigger, tamaname) {
                 if (trigger === "ok") {
                     // console.log(trigger);
                     this.ready = true;
-                    // console.log(this.ready);
+                    this.tamaName = tamaname;
+                    console.log(this.tamaName);
                     return this.ready;
                 }
                 else {
@@ -45,6 +46,8 @@ var Application;
                 this.scope.state = "good";
                 this.scope.score = 0;
                 this.scope.lastScore = this.lastScore;
+                this.jobOffer = false;
+                this.scope.acceptWork = false;
                 this.money = this.gameVars.getMoney();
                 this.becomeOlder();
             };
@@ -53,11 +56,23 @@ var Application;
                 var _this = this;
                 var pdv = this.lifePoints;
                 console.log("init pdv = " + pdv);
+                var that = this;
                 this.cycle = setInterval(function () {
                     _this.scope.$apply(function () {
                         _this.setOlderVariables();
                         _this.scope.score++;
                         localStorage.setItem('lastScore', JSON.stringify(_this.scope.score));
+                        var randomJob = Math.random();
+                        console.log(randomJob);
+                        if (randomJob >= 0.7) {
+                            _this.scope.jobOffer = true;
+                        }
+                        else {
+                            _this.scope.jobOffer = false;
+                        }
+                        // object must be empty initialize,so it can be appended
+                        // this.scope.changeOffer;
+                        //that.scope.changeOffer;
                     });
                 }, 5000);
             };
@@ -94,8 +109,14 @@ var Application;
             HomeController.prototype.setActionVariables = function (workingVariables) {
                 console.log('---->', workingVariables['life']);
                 this.lifePoints += workingVariables['life'];
+                if (this.lifePoints > 100)
+                    this.lifePoints = 100;
                 this.moodPoints += workingVariables['mood'];
+                if (this.moodPoints > 100)
+                    this.moodPoints = 100;
                 this.tiredPoints += workingVariables['tired'];
+                if (this.tiredPoints > 100)
+                    this.tiredPoints = 100;
                 this.money += workingVariables['money'];
                 this.scope.workingVariables = workingVariables;
             };
@@ -139,6 +160,8 @@ var Application;
                 this.setActionVariables(actionVariables);
                 this.scope.workName = work.name;
                 this.workIndex = workKey;
+                this.scope.jobOffer = false;
+                this.scope.acceptWork = true;
                 this.workActionVariables = [];
                 this.workActionVariables['life'] = work.life;
                 this.workActionVariables['mood'] = Math.floor(Math.random() * work.mood);
@@ -310,7 +333,11 @@ var Application;
                 this.wkService = worklistService;
                 return this.instanceDirective();
             }
+            chooseworkDirective.prototype.a = function () {
+                console.log('yoooopyyyy');
+            };
             chooseworkDirective.prototype.instanceDirective = function () {
+                console.log('======================================');
                 var thesunhine = [];
                 var workKey = '';
                 this.wkService.getWorkList().then(function (data) {
@@ -328,12 +355,14 @@ var Application;
                     templateUrl: './assets/scripts/core/directives/templates/choosework.html',
                     restrict: 'A',
                     scope: {
-                        acceptWork: "&"
+                        acceptWork: "&",
+                        changeOffer: "&"
                     },
                     link: function (scope) {
                         scope.work = thesunhine;
                         scope.workKey = workKey;
                         scope.closework = this.close;
+                        scope.changeOffer = this.a;
                     }
                 };
             };

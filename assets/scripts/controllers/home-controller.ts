@@ -13,11 +13,14 @@ module Application.Controllers {
 		ready: any;
 		workIndex: string;
 		workActionVariables: any;
+		tamaName: string;
+
 
 		// States
 		hasWorked : boolean; // If tama has worked on one cycle
 		hasSlept : boolean; // If tama has slept on one cycle
 		gameStarted: boolean;
+		jobOffer: boolean;
 		// Score
 		score: number;
 		lastScore: number;
@@ -46,11 +49,12 @@ module Application.Controllers {
 			
 		}
 
-		readyToPlay(trigger) {
+		readyToPlay(trigger,tamaname) {
 			if(trigger === "ok") { 
 				// console.log(trigger);
 				this.ready = true;
-				// console.log(this.ready);
+				this.tamaName = tamaname;
+				console.log(this.tamaName);
 				return this.ready
 			} else {
 				// console.log(trigger);
@@ -74,7 +78,8 @@ module Application.Controllers {
 			this.scope.state = "good";
 			this.scope.score = 0;
 			this.scope.lastScore = this.lastScore;
-
+			this.jobOffer = false;
+			this.scope.acceptWork = false;
 			this.money = this.gameVars.getMoney();
 			this.becomeOlder();
 
@@ -86,11 +91,28 @@ module Application.Controllers {
 		becomeOlder() {
 			let pdv = this.lifePoints;
 			console.log("init pdv = "+pdv);
+			let that = this;
 			this.cycle = setInterval(() => {
 				this.scope.$apply(() => {
 					this.setOlderVariables();
 					this.scope.score++;
 					localStorage.setItem('lastScore', JSON.stringify(this.scope.score));
+					let randomJob = Math.random();
+					console.log(randomJob);
+					if (randomJob >= 0.7) {
+						this.scope.jobOffer = true;
+
+					}
+					else{
+						this.scope.jobOffer = false;
+					}
+					
+
+					// object must be empty initialize,so it can be appended
+					// this.scope.changeOffer;
+
+				//that.scope.changeOffer;
+					
 
 				});
 			},5000);
@@ -136,8 +158,11 @@ module Application.Controllers {
 		setActionVariables(workingVariables) {
 			console.log('---->', workingVariables['life'])
 			this.lifePoints += workingVariables['life'];
+			if (this.lifePoints > 100) this.lifePoints = 100;
 			this.moodPoints += workingVariables['mood'];
+			if (this.moodPoints > 100) this.moodPoints = 100;
 			this.tiredPoints += workingVariables['tired'];
+			if (this.tiredPoints > 100) this.tiredPoints = 100;
 			this.money += workingVariables['money'];
 			this.scope.workingVariables = workingVariables;
 		}
@@ -187,6 +212,9 @@ module Application.Controllers {
 			this.setActionVariables(actionVariables);
 			this.scope.workName = work.name;
 			this.workIndex = workKey;
+			this.scope.jobOffer = false;
+			this.scope.acceptWork = true;
+
 
 			this.workActionVariables = [];
 			this.workActionVariables['life'] = work.life;

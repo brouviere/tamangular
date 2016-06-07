@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>TamAngular</title>
 	<!-- BOOTSTRAP -->
-		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/sandstone/bootstrap.min.css" rel="stylesheet" integrity="sha384-QqZs0aSOGFan3GWVdP4PyCBp6icaF/4n8Q+wsmZUTiiVIqE4r4tFYcb8Osf+8y45" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-kVo/Eh0sv7ZdiwZK32nRsp1FrDT3sLRLx3zVpSSTI9UdO5H02LJNLBg5F1gwvKg0" crossorigin="anonymous">
 	<!-- FONTAWESOME -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 	<!-- CUSTOM STYLE -->
@@ -12,7 +12,7 @@
 	</head>
 	<body ng-app="tamangularApp">
 		<div ng-controller="HomeController as myController">
-		<div choosework-directive>
+		<div choosework-directive object-to-inject="changeOffer">
 				
 			</div>
 			<div class="container">
@@ -27,27 +27,37 @@
 			<!-- CONTENT -->
 				<div class="col-xs-12" ng-if="!myController.ready" ng-hide="gameStarted">
 					<div class="jumbotron">
-						<h1>TamAngular</h1>
+						<h1 class="animated bounce">TamAngular</h1>
 						<img src="assets/images/pk_good.png" alt="pika_good_mood" class="img-thumbnail">
 						<p>Le but du jeu est d'atteindre le plus haut score en mainenant votre TamAngular le plus longtemps en vie avec un bon niveau de joie et de santé. Chaque cycle vous fait gagner 1pt au score.</p>
-						<p><a class="btn btn-primary btn-lg" ng-click="myController.readyToPlay('ok')">Jouer à TamAngular</a></p>
+						<form class="form-inline">
+							<fieldset>
+								<!-- <div class="form-group">
+									<label class="col-lg-2 control-label" for="inputLarge">Your Tamangular's name :</label>
+									<input class="col-lg-10 form-control input-lg" type="text" id="inputLarge" ng-model="name">
+								</div> -->
+									<button class="btn btn-primary btn-lg " ng-click="myController.readyToPlay('ok',name)">Jouer à TamAngular</button>
+							</fieldset>
+								
+						</form>
+					
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12" ng-show="myController.ready">
+				<div class="col-xs-12 col-sm-12 animated fadeIn" ng-show="myController.ready">
 					<div class="panel panel-default">
 					 	<div class="panel-heading">
-					    	<h3 class="panel-title">Your Tamagotchi's name</h3>
+					    	<h3 class="panel-title" ng-bind="myController.tamaName"></h3>
 					    	<h4 ng-bind="workName"></h4>
 					    <!-- Action Start -->
 					 		<button class="btn btn-success" ng-click="myController.initGameVars()" ng-disabled="gameStarted">Start</button>
 					 	
 						<!-- Action work -->	
 					 		<button class="btn" ng-click="myController.goToWork()" 
-					 		ng-disabled="(!gameStarted) || onAction">
+					 		ng-disabled="(!gameStarted) || onAction || !acceptWork">
 					 			<span> Work</span>
 					 		</button>
-					 		<button type="button" class="btn" data-toggle="modal" data-target="#myModal">
-							 Choose Work
+					 		<button type="button" class="btn" data-toggle="modal" data-target="#myModal" ng-disabled="(!gameStarted) || onAction || !jobOffer">
+							 Job Offer <span class="badge" ng-if="jobOffer">1</span>
 							</button>
 						<!-- Action Feed -->
 					 		<div class="btn-group">
@@ -105,7 +115,7 @@
 											<h3 class="panel-title">Action cost</h3>
 										</div>
 										<div class="panel-body">
-							   			 	<div class="col-xs-6">
+							   			 	<div class="col-xs-6 ">
 							   			 		<i class="fa fa-spinner fa-pulse fa-4x" ng-if="onAction"></i>	
 							   			 	</div>
 							   			 	<div class="col-xs-6">
@@ -158,6 +168,7 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 		<!-- ANGULAR JS -->
 			<script type="text/javascript" src="node_modules/angular/angular.min.js" charset="utf-8"></script>
+			<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
 		<!-- COMPILED JS FILES -->
 			<script type="text/javascript" src="dist/appts.js" charset="utf-8"></script>
 

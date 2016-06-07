@@ -4,14 +4,18 @@ module Application.Directives {
 	export class chooseworkDirective {
 		wkService: any;
 		close: boolean;
-
+	
 		constructor(worklistService:any) {
 			this.close = false;
 			this.wkService =  worklistService;
 			return this.instanceDirective();
+			
 		}
-
+		a () {
+			console.log('yoooopyyyy');
+		}
 		instanceDirective():any {
+			console.log('======================================');
 			let thesunhine=[];
 			let workKey = '';
 			this.wkService.getWorkList().then(function(data) {
@@ -33,6 +37,7 @@ module Application.Directives {
 				restrict: 'A',
 				scope: {
 					acceptWork: "&",
+					changeOffer: "&"
 
 
 				},
@@ -40,6 +45,8 @@ module Application.Directives {
 					scope.work = thesunhine;
 					scope.workKey= workKey
 					scope.closework = this.close;
+					scope.changeOffer = this.a;
+
 					
 				}
 			}
